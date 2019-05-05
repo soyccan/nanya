@@ -66,37 +66,54 @@ void execute()
 
     // 第一組
     offset = 0;
-    outColor(24, 255, 0, 0);
-    output(flash_white, 4);
-    output(flash_color, 4);
+    outColor(24,255,153,204);
+    //outColor(24,255,255,102);
+    output(flash_white, 8);
+
 
     // 正轉
-    outColor(4, 253, 39, 157);
-    outColor(4, 60, 196, 14);
-    outColor(4, 51, 153, 255);
-    outColor(4, 246, 179, 4);
-
-    output(rainbow_wave, 8);
+    for(int i=0;i<2;i++)
+    {
+      outColor(1, 255,  0,  0);
+      outColor(1, 255,167,  0);
+      outColor(1, 255,255,  0);
+      outColor(1,   0,255,  0);
+      outColor(1,   0,  0,255);
+      outColor(1,   0,211,255);
+      outColor(1, 165,  0,255);
+      outColor(1,   0,  0,  0);
+    }
+    
+    offset = 0;
+    output(rainbow_wave, 4);
+    output(flower1, 4);
     output(sun, 8);
     output(moon, 8);
     output(star, 8);
 
     // 蝴蝶
     output(ARROW_red, 4);
-    output(ARROW_blue, 4);
+    offset = 88;
+    output(ARROW_blue_r, 4);
+    offset = 0;
     output(ARROW_yellow, 4);
-    output(rainbow_stripe, 4);
+    offset = 88;
+    output(num_4, 1);
+    output(num_3, 1);
+    output(num_2, 1);
+    output(num_1, 1);
 
     // 風火輪
+    offset = 0;
     output(fire, 16);
 
     // 停球
-    outColor(16, 255, 0, 0);
-
+    outColor(16,255,153,204);
+    //outColor(16,255,255,102);
     // 間奏
     dark(15);
 
-    // 換人
+ /*   // 換人
     // 第二組
     offset = 31;  // 記得改
     output(redyellowgreen,9);       // 當一份真相   隻手能隱藏
@@ -119,13 +136,16 @@ void execute()
     outColor(8, 255, 0, 0);        // 七旋(純色)
     outColor(8, 255, 0, 255);        // 七旋(純色)
 
-    // 第一組
+*/    // 第一組
     // 單八
     // (夜末央)
     offset = 0;
-    outputLongDelay(fade_blue, 2, 60);
-    outputLongDelay(fade_red, 2, 60);
+    outColor(1, 255,255,255);
+    outColor(1,0, 0, 0);
+    outColor(1, 0,255, 0);
+    outColor(1,0, 0, 0);
     output(flower1, 12);
+
 
     offset = 31; // 記得改
     //outColor(16, 255, 255, 255);                             // 夜未央 天未亮 我在倖存的沙場
