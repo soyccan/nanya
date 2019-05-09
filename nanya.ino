@@ -1,7 +1,9 @@
 #define ID 1
-/* ID =
+/*
+兩組分別燒 改ID就好
+ID =
 1 : 戴依柔
-2 : 劉東昕
+2 : 劉東昕 (不會用到)
 3 : 陳仲景
 */
 
@@ -215,14 +217,27 @@ void execute()
 
     // 第一組
     // 單八
-    // (夜末央)
+    // 夜未央 天未亮
     offset = 0;
-    outColor(1, 255,255,255);
-    outColor(1,0, 0, 0);
-    outColor(1, 0,255, 0);
-    outColor(1,0, 0, 0);
+    beat = 250;
+#if ID == 1 // 戴依柔
+    outColor(3,0,167,255);
+    dark(1);
+    outColor(3,255,149,0);
+    dark(1);
+#elif ID == 3 // 陳仲景
+    outColor(3,255,149,0);
+    dark(1);
+    outColor(3,0,167,255);
+    dark(1);
+#endif
+    beat = 500;
+
+    // 我在倖存的沙場
+    // 只盼望 此生再奔向思念的臉龐 (接)
     output(flower1, 12);
 
+    // 第二組
     offset = 45; // 記得改
     output(heart, 8);                                                 // 淚未乾 心未涼 是什麼依然在滾燙
     output(sixstar, 8);                                               // 入陣曲  四面楚歌誰獨唱
