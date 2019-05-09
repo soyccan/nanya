@@ -181,7 +181,14 @@ void execute()
     output(fish3, 8);
 #endif
 
-    output3in1(five, zero, zero,8);                      //只盼望 此生再奔向思念的臉龐
+    //只盼望 此生再奔向思念的臉龐
+#if ID == 1 // 戴依柔
+    output(five, 8);
+#elif ID == 2 // 劉東昕
+    output(zero, 8);
+#elif ID == 3 // 陳仲景
+    output(zero, 8);
+#endif
 
     //淚未乾 心未涼 是什麼依然在滾燙
 #if ID == 1 // 戴依柔
