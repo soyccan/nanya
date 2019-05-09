@@ -76,6 +76,7 @@ void execute()
     // pixels.setBrightness(30);
 
     // 第一組
+    // 換球
     offset = 0;
 #if ID == 1 // 戴依柔
     outColor(24,0,167,255);
@@ -99,31 +100,35 @@ void execute()
     }
 
     offset = 0;
-    output(rainbow_wave, 4);
-    output(flower1, 4);
-    output(sun, 8);
-    output(moon, 8);
-    output(star, 8);
+    output(rainbow_wave, 4); // 當一座城牆
+    output(flower1, 4);      // 只為了阻擋
+    output(sun, 8);          // 所有自由渴望
+    output(moon, 8);         // 當一份信仰   再不能抵抗
+    output(star, 8);         // 遍地戰亂饑荒
 
     // 蝴蝶
-    output(ARROW_red, 4);
-    output(ARROW_blue_r, 4);
-    output(ARROW_yellow, 4);
-    output(num_4, 1);
-    output(num_3, 1);
-    output(num_2, 1);
-    output(num_1, 1);
+    output(ARROW_red, 4);    // 蘭 陵 撩 亂 茫
+    output(ARROW_blue_r, 4); // 天 地 離 人 忘
+    output(ARROW_yellow, 4); // 無 畏 孤 塚 葬
+    output(num_4, 1);        // 只 怕 蒼 生 殤
+    output(num_3, 1);        // ..
+    output(num_2, 1);        // ..
+    output(num_1, 1);        // ..
 
     // 風火輪
     offset = 0;
-    output(fire, 16);
+    output(fire, 16); // 夜未央  天未亮   我在倖存的沙場
+                      // 只盼望  此生再   奔向思念的臉龐
 
     // 停球
+    // 淚未乾  心未涼   是什麼依然在滾燙
+    // 入陣曲  伴我無悔的狂妄
 #if ID == 1 // 戴依柔
     outColor(16,0,167,255);
 #elif ID == 3 // 陳仲景
     outColor(16,255,149,0);
 #endif
+
     // 間奏
     dark(15);
 
