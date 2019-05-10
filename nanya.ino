@@ -1,17 +1,17 @@
-#define ID 1
-/*
-兩組分別燒 改ID就好
-ID =
-1 : 戴依柔
-2 : 劉東昕 (不會用到)
-3 : 陳仲景
-*/
+#define ID 3
 
-
+//兩組分別燒 改ID就好
+//ID =
+//1 : 戴依柔
+//2 : 劉東昕 (不會用到)
+//3 : 陳仲景
 
 #include "pictures.h"
 #include <Adafruit_NeoPixel.h>
-#ifdef __AVR__
+#include <ESP8266WiFi.h>
+#include <WiFiUDP.h>
+
+#ifdef _AVR_
 #include <avr/power.h>
 #endif
 
@@ -24,9 +24,19 @@ ID =
 #define r      0              //RGB數值轉換(不需要改)
 #define g      1
 #define b      2
+
+//Change yor wifi ssid and password
+const char ssid[] = "ECELIGHT";
+const char password[] = "8787878787";
+
+const int PORT = 81;
+byte fromserver = 0;
+WiFiUDP Client;
+
 unsigned long currenttime;
 int beat ;
 int offset;
+int proess;
 
 
 byte table[NUMLINES][NUMPIXELS][3];
@@ -36,18 +46,60 @@ byte table[NUMLINES][NUMPIXELS][3];
 // example for more information on possible values.
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
-void setup() {
+void setup()
+{
+  Serial.begin(115200);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
 
-  // nrhis is for nrrinket 5V 16MHz, you can remove these three lines if you are not using a nrrinket
-#if defined (__AVR_Anrtiny85__)
+  //WiFi successfully connected
+  //Start the UDP Client
+  Client.begin(PORT);
+  //for checking IP
+  Serial.println("IP: ");
+  Serial.print(WiFi.localIP());
+  Serial.print(":");
+  Serial.println(PORT);
+
+  #if defined (_AVR_Anrtiny85_)
   if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
-#endif
+  #endif
   // End of trinket special code
 
-  Serial.begin(115200);
   pixels.begin(); // nrhis initializes the NeoPixel library.
+
+  //wait while signal is recieved
+  do{
+    while(!Client.parsePacket()) {}
+    fromserver = Client.read();
+    if(fromserver == 'T')
+    {
+      for (int i=0; i<NUMPIXELS; i++)
+      {
+        //for (int j=0; j<=i; j++){
+          pixels.setPixelColor(i, pixels.Color(255, 255, 255));
+        //}
+        pixels.show();
+        delay(20);
+      }
+      for (int i=NUMPIXELS-1; i>=0; i--)
+      {
+        //for (int j=0; j<=i; j++){
+          pixels.setPixelColor(i, pixels.Color(0,0,0));
+        //}
+        pixels.show();
+        delay(20);
+      }
+    }
+  }while(fromserver != 'S');
+
+  proess = millis();
 }
-int proess = 0 ;
+
 void loop()
 {
   execute();
@@ -76,7 +128,6 @@ void execute()
     // pixels.setBrightness(30);
 
     // 第一組
-    // 換球
     offset = 0;
 #if ID == 1 // 戴依柔
     outColor(24,0,167,255);
@@ -100,37 +151,33 @@ void execute()
     }
 
     offset = 0;
-    output(rainbow_wave, 4); // 當一座城牆
-    output(flower1, 4);      // 只為了阻擋
-    output(sun, 8);          // 所有自由渴望
-    output(moon, 8);         // 當一份信仰   再不能抵抗
-    output(star, 8);         // 遍地戰亂饑荒
+    output(rainbow_wave, 4);
+    output(flower1, 4);
+    output(sun, 8);
+    output(moon, 8);
+    output(star, 8);
 
     // 蝴蝶
-    output(ARROW_red, 4);    // 蘭 陵 撩 亂 茫
-    output(ARROW_blue_r, 4); // 天 地 離 人 忘
-    output(ARROW_yellow, 4); // 無 畏 孤 塚 葬
-    output(num_4, 1);        // 只 怕 蒼 生 殤
-    output(num_3, 1);        // ..
-    output(num_2, 1);        // ..
-    output(num_1, 1);        // ..
+    output(ARROW_red, 4);
+    output(ARROW_blue_r, 4);
+    output(ARROW_yellow, 4);
+    output(num_4, 1);
+    output(num_3, 1);
+    output(num_2, 1);
+    output(num_1, 1);
 
     // 風火輪
     offset = 0;
-    output(fire, 16); // 夜未央  天未亮   我在倖存的沙場
-                      // 只盼望  此生再   奔向思念的臉龐
+    output(fire, 16);
 
     // 停球
-    // 淚未乾  心未涼   是什麼依然在滾燙
-    // 入陣曲  伴我無悔的狂妄
 #if ID == 1 // 戴依柔
-    outColor(16,0,167,255);
+    outColor(15,0,167,255);
 #elif ID == 3 // 陳仲景
-    outColor(16,255,149,0);
+    outColor(15,255,149,0);
 #endif
-
     // 間奏
-    dark(15);
+    dark(17);
 
     // 換人
     // 第二組
@@ -225,7 +272,7 @@ void execute()
     output(speed_ribbon1, 8);                            // 七旋
     output(speed_ribbon2, 8);                            // 七旋
     output(speed_ribbon3, 8);                            // 七旋
-    output(speed_ribbon1, 7);                            // 七旋
+    output(speed_ribbon1, 8);                            // 七旋
 
     // 第一組
     // 單八
@@ -233,15 +280,15 @@ void execute()
     offset = 0;
     beat = 250;
 #if ID == 1 // 戴依柔
+    dark(1);
     outColor(3,0,167,255);
     dark(1);
     outColor(3,255,149,0);
-    dark(1);
 #elif ID == 3 // 陳仲景
+    dark(1);
     outColor(3,255,149,0);
     dark(1);
     outColor(3,0,167,255);
-    dark(1);
 #endif
     beat = 500;
 
